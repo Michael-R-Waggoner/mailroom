@@ -15,6 +15,10 @@ def query():
 
 def request_signature():
     run(["./signature_request.exe"])
+
+def create_csv():
+    run(["./export_to_ccsv.exe"])
+    
 #GUI Setup====================================================================================================
 window = tkinter.Tk()
 window.title("PackTrack Home Screen")
@@ -48,5 +52,9 @@ signature_request_button.pack()
 #Creates start db button
 start_dbase = tkinter.Button(text="Initialize a new Database",command=start_db)
 start_dbase.pack()
+
+#Generate button to create CSV
+create_csv = tkinter.Button(text="Upload.csv copy of database to Sharepoint",command=create_csv)
+create_csv.pack()
 
 window.mainloop()
