@@ -58,7 +58,7 @@ def move(evt):
 cvs.bind_all('<Motion>', move)
 
 # Inserts package information to DB==========================================================
-def update_package(conn, package):
+def update_package(conn):
     try:
         sql = """UPDATE mail SET date_delivered = ?,
                                  signature = ?
@@ -75,7 +75,6 @@ def update_package(conn, package):
     
 # Clears insert fields
 def clear_fields():
-    date_delivered.delete(0, 200)
     tracking_num.delete(0, 200)
 
 #Orchestrates functionality
@@ -84,8 +83,7 @@ def main():
     conn = create_connection(database)
     with conn:
         finish()
-        package = (f"{date_delivered.get()}",converted_string,f"{tracking_num.get()}")
-        update_package(conn,package)
+        update_package(conn)
         clear_fields()
 
 
