@@ -1,6 +1,7 @@
 import sqlite3
 import tkinter
 from sqlite3 import Error
+from datetime import date
 
 # DB interactions
 def create_connection(db_file):
@@ -14,14 +15,16 @@ def create_connection(db_file):
     return conn
 
 # Inserts package information to DB
-def new_package(conn, package):
+def new_package(conn):
     try:
         sql = """INSERT INTO mail(recipient_name,tracking_number,receive_date,clerk_initials,courier)
                  VALUES(?,?,?,?,?)"""
         cur = conn.cursor()
+        date_received = date.today()
+        package = (f"{recipient_name.get()}",f"{tracking_num.get()}",f"{date_received}",f"{clerk_initials.get()}",f"{clicked.get()}")
         cur.execute(sql,package)
         conn.commit()
-        confirmation = tkinter.Label(text=f"{recipient_name.get()},{tracking_num.get()},{date_received.get()},{clerk_initials.get()},{clicked.get()} added to database.")
+        confirmation = tkinter.Label(text=f"{recipient_name.get()},{tracking_num.get()},{date_received},{clerk_initials.get()},{clicked.get()} added to database.")
         confirmation.pack()
     except Exception as e:
         print(e)
@@ -30,7 +33,6 @@ def new_package(conn, package):
 def clear_fields():
     recipient_name.delete(0, 200)
     tracking_num.delete(0, 200)
-    date_received.delete(0, 200)
     clerk_initials.delete(0,200)
 
 # Main function that orchestrates program
@@ -38,8 +40,7 @@ def main():
     database = "C:/sqlite/db/pythonsqlite.db"
     conn = create_connection(database)
     with conn:
-        package = (f"{recipient_name.get()}",f"{tracking_num.get()}",f"{date_received.get()}",f"{clerk_initials.get()}",f"{clicked.get()}")
-        new_package(conn,package)
+        new_package(conn)
         clear_fields()
 
 #Gui initialization==========================================
@@ -66,14 +67,6 @@ tracking_num_label.pack()
 #tracking number entry box to be passed to insert function
 tracking_num = tkinter.Entry(window, name="tracking number")
 tracking_num.pack()
-
-#date received label for entry box
-date_received_label = tkinter.Label(text="Date Received DD/MMM/YY",padx=10,pady=10)
-date_received_label.pack()
-
-#date received entry box to be passed to insert function
-date_received = tkinter.Entry(window, name="date received")
-date_received.pack()
 
 #clerk intials label
 clerk_initials_label = tkinter.Label(text="Clerk Initials")

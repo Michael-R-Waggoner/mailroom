@@ -2,7 +2,7 @@ import sqlite3
 import tkinter
 from sqlite3 import Error
 from PIL import Image, ImageDraw
-
+from datetime import date
 
 window = tkinter.Tk()
 window.title("MailPackTrack")
@@ -64,9 +64,11 @@ def update_package(conn, package):
                                  signature = ?
                  WHERE tracking_number = ?;"""
         cur = conn.cursor()
+        date_delivered = date.today()
+        package = (f"{date_delivered}",converted_string,f"{tracking_num.get()}")
         cur.execute(sql,package)
         conn.commit()
-        confirmation = tkinter.Label(text=f"{date_delivered.get()},{tracking_num.get()}, and signature added to database.")
+        confirmation = tkinter.Label(text=f"{date_delivered},{tracking_num.get()}, and signature added to database.")
         confirmation.grid(row=5,column=2)
     except Exception as e:
         print(e)
@@ -102,21 +104,13 @@ sig_label.grid(column=1,row=3)
 banner = tkinter.Label(window,wrap="500",text="Welcome to the USMAPS PackTracker please enter info below. Enter Tracking number, signature, and delivery date to update database.",font=("Arial",14,"bold"))
 banner.grid(column=2,row=1)
 
-#Creates label for date_delivered entry
-date_delivered_label = tkinter.Label(window, text="Date Delivered")
-date_delivered_label.grid(column=1,row=2)
-
-#accepts date_delivered to be passed to db
-date_delivered = tkinter.Entry(window)
-date_delivered.grid(column=2,row=2)
-
 #Creates Label for tracking_num field
 tracking_num_label = tkinter.Label(window, text="Tracking Number")
-tracking_num_label.grid(column=3,row=2)
+tracking_num_label.grid(column=1,row=2)
 
 #Accepts tracking_num to be passed to db
 tracking_num = tkinter.Entry(window)
-tracking_num.grid(column=4,row=2)
+tracking_num.grid(column=2,row=2)
 
 #Creates Submit button that starts main funciton
 submit = tkinter.Button(window, text="Submit", command=main)
