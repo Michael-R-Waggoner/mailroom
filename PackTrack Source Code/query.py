@@ -46,11 +46,13 @@ def query_db_all():
     cur.execute(sql)
     rows = cur.fetchall()
     #This loop stores output to a list to enable more effective clearing later on
+    window2 = tkinter.Tk()
     global output
     output = []
     for i in range(0,len(rows)):
-        output.append(tkinter.Label(text=f"{rows[i]}"))
+        output.append(tkinter.Label(window2, text=f"{rows[i]}"))
         output[i].pack()
+    window2.mainloop()
 
 def clear_output():
     for label in output:
