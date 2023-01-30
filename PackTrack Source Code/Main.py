@@ -1,5 +1,6 @@
 import tkinter
 from subprocess import run
+from datetime import datetime
 
 def start_db():
     run(["./db_init.exe"])
@@ -17,7 +18,7 @@ def request_signature():
     run(["./signature_request.exe"])
 
 def create_csv():
-    run(["./export_to_ccsv.exe"])
+    run(["./export_to_csv.exe"])
     
 #GUI Setup====================================================================================================
 window = tkinter.Tk()
@@ -54,7 +55,10 @@ start_dbase = tkinter.Button(text="Initialize a new Database",command=start_db)
 start_dbase.pack()
 
 #Generate button to create CSV
-create_csv = tkinter.Button(text="Upload.csv copy of database to Sharepoint",command=create_csv)
-create_csv.pack()
+create_csv_button = tkinter.Button(text="Upload.csv copy of database to Sharepoint",command=create_csv)
+create_csv_button.pack()
+
+if datetime.today().date().strftime("%d") == "28":
+    run("./export_to_csv.exe")
 
 window.mainloop()

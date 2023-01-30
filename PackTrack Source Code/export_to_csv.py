@@ -9,7 +9,8 @@ table_name = "mail"
 
 def get_run_time():
     # Get the current date and time
-    run_time = datetime.now()
+    run_time = datetime.today().date()
+    print(str(run_time))
     return run_time.strftime("%Y-%m-%d")
 
 # Connect to the database

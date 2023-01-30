@@ -66,7 +66,6 @@ def main():
         query = (f"{search_term.get()}",)
         query_db(conn,query)
         
-
 #GUI Setup========================================================================
 window = tkinter.Tk()
 window.title("Database Query")
