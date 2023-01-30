@@ -50,8 +50,11 @@ def query_db_all():
     global output
     output = []
     for i in range(0,len(rows)):
-        output.append(tkinter.Label(window2, text=f"{rows[i]}"))
-        output[i].pack()
+        if i <= 50:
+            output.append(tkinter.Label(window2, text=f"{rows[i]}"))
+            output[i].pack()
+        else:
+            break
     window2.mainloop()
 
 def clear_output():
@@ -106,7 +109,7 @@ submit_button = tkinter.Button(text="Submit",command=main)
 submit_button.pack()
 
 #Creates query all button
-query_all_button = tkinter.Button(text="Show all entries in Database", command=query_db_all)
+query_all_button = tkinter.Button(text="Show last 50 entries in Database", command=query_db_all)
 query_all_button.pack()
 
 #Clear queries button
