@@ -50,11 +50,14 @@ def query_db_all():
     global output
     output = []
     for i in range(0,len(rows)):
-        if i <= 50:
+        if i < 50:
             output.append(tkinter.Label(window2, text=f"{rows[i]}"))
             output[i].pack()
         else:
-            break
+            output.append(tkinter.Label(window2, text=f"{rows[i]}"))
+            output[i-50].destroy()
+            output[i].pack()
+            
     window2.mainloop()
 
 def clear_output():
